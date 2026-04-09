@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "CycleData": {
+      "title": "CycleData",
+      "description": "User cycle log data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "User ID" },
+        "date": { "type": "string", "format": "date", "description": "Date of log" },
+        "symptoms": { "type": "array", "items": { "type": "string" }, "description": "Symptoms" },
+        "mood": { "type": "string", "description": "Mood" }
+      },
+      "required": ["userId", "date"]
+    },
+    "Prediction": {
+      "title": "Prediction",
+      "description": "Cycle prediction data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "User ID" },
+        "nextPeriodStart": { "type": "string", "format": "date", "description": "Predicted start date" },
+        "fertileWindowStart": { "type": "string", "format": "date", "description": "Predicted fertile window start" },
+        "fertileWindowEnd": { "type": "string", "format": "date", "description": "Predicted fertile window end" },
+        "lastUpdated": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["userId", "nextPeriodStart"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/cycleData/{logId}": {
+      "schema": { "$ref": "CycleData" },
+      "description": "User cycle logs"
+    },
+    "/users/{userId}/predictions/{predictionId}": {
+      "schema": { "$ref": "Prediction" },
+      "description": "User cycle predictions"
+    }
+  }
+}
